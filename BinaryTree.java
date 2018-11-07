@@ -46,7 +46,7 @@ public class BinaryTree {
   }
 
   public boolean isEmpty(){
-    return left == null;
+    return data == null;
   }
 
   public boolean isLeaf(){
@@ -61,8 +61,16 @@ public class BinaryTree {
   }
 
   public int prune(){
-      // TODO:  write the prune method
-      return -1;
+      int headCount = 0;
+      if (this.isLeaf()) {
+	  headCount++;
+	  data = null;
+      }
+      if (left != null)
+	  headCount+= left.prune();
+      if (right != null)
+	  headCount += right.prune();
+      return headCount;
   }
 
   public boolean isFull(){
@@ -76,16 +84,26 @@ public class BinaryTree {
   }
 
   public int leafCount(){
-      // TODO:  write the leafCount method
-      return -1;
+      int count = 0;
+      if (right != null)
+	  count += right.leafCount();
+      if (left!=null)
+	 count += left.leafCount();
+      if (this.isLeaf()) 
+	  count++; 
+      return count;
   }
 
   public BinaryTree mirrorImage(){
       BinaryTree result = new BinaryTree(data);
-      BinaryTree newLeft = right.mirrorImage();
-      BinaryTree newRight = left.mirrorImage();
-      result.left = newLeft;
-      result.right = newRight;
+      if (right == null)
+	  result.left = null;
+      else 
+	  result.left = right.mirrorImage();
+      if (left == null)
+	  result.right = null;
+      else 
+	  result.right = left.mirrorImage();
       return result;
   }
 
