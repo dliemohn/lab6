@@ -119,8 +119,16 @@ public class BinaryTree {
   }
 
   public int levelCount(int level){
-      // TODO:  write the levelCount method
-      return -1;
+	  if(data == null)
+		  return 0;
+      if (level == 0)
+    	  return 1;
+      int levelBelow = 0;
+      if(!left.isEmpty())
+    	  levelBelow += left.levelCount(level--);
+      if(right.isEmpty())
+    	  levelBelow += right.levelCount(level--);
+      return levelBelow;
   }
 
   public int weightBalanceFactor(){
@@ -129,17 +137,35 @@ public class BinaryTree {
   }
 
   public int nodeSum(){
-      // TODO:  write the nodeSum method
-      return -1;
+      int result = Integer.parseInt(data);
+      if(!left.isEmpty())
+    	  result += left.nodeSum();
+      if(!right.isEmpty())
+      result += right.nodeSum();
+      return result;
   }
 
   public void doubles(){
-      // TODO:  write the doubles method
+      int newValue = Integer.parseInt(data) * 2;
+      if(!left.isEmpty())
+    	  left.doubles();
+      if(!right.isEmpty())
+    	  right.doubles();
+      data = newValue + "";
   }
 
   public int maxPathSum(){
-      // TODO:  write the maxPathSum method
-      return -1;
+      int node = Integer.parseInt(data);
+      int leftsum  = node;
+      int rightsum = node;
+      if(!left.isEmpty())
+    	  leftsum += left.maxPathSum();  
+      if(!right.isEmpty())
+    	  rightsum += right.maxPathSum();
+      if(rightsum > leftsum)
+    	  return rightsum;
+      else 
+    	  return leftsum;
   }
 
   public String preOrder(){

@@ -46,9 +46,9 @@ public class TreeLoader {
 		
 		BinaryTree current = new BinaryTree(data);
 		if (side.equals("L"))
-		ref.get(daddy).left = current;
+		ref.get(daddy).setLeft(current);
 		else
-			ref.get(daddy).right = current;
+			ref.get(daddy).setRight(current);
 		ref.add(current);
 		System.out.println("Looped!");
 	}
