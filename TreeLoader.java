@@ -38,7 +38,7 @@ public class TreeLoader {
 	//System.out.println("Root Added!");
 	
 	while (sc.hasNext()) {
-		System.out.println("Theres more too see!");
+		//System.out.println("Theres more too see!");
 		
 		String data = sc.next();
 		String side = sc.next();
@@ -50,7 +50,7 @@ public class TreeLoader {
 		else
 			ref.get(daddy).setRight(current);
 		ref.add(current);
-		System.out.println("Looped!");
+		//System.out.println("Looped!");
 	}
 	sc.close();
 	return ref.get(0);

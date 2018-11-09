@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 public class BinaryTree {
 
   protected String data;
@@ -169,22 +171,28 @@ public class BinaryTree {
   }
 
   public String preOrder(){
-      // TODO:  write the preOrder method
-      return "";
+	  if(!this.isEmpty())
+		  return this.data + " "+ left.preOrder() + right.preOrder();
+	  return "";
   }
 
   public String inOrder(){
-      // TODO:  write the inOrder method
-      return "";
+	  if(!this.isEmpty())
+		  return left.preOrder()  + this.data + " " + right.preOrder();
+	  return "";
   }
 
   public String postOrder(){
-      // TODO:  write the postOrder method
-      return "";
+	  if(!this.isEmpty())
+		  return left.preOrder() +  right.preOrder() +  this.data  + " " ;
+	  return "";
   }
 
   public String levelOrder(){
-      // TODO:  write the levelOrder method
+      String result = "";
+      LinkedList <String> order = new LinkedList<String>();
+      order.add(data);
+      
       return "";
   }
   
