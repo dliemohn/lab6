@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class BinaryTree {
@@ -189,9 +190,12 @@ public class BinaryTree {
   }
 
   public String levelOrder(){
+	  if (isEmpty())
+		  return "";
       String result = "";
       LinkedList <String> order = new LinkedList<String>();
-      order.add(data);
+      ArrayList <BinaryTree> level = new ArrayList<BinaryTree>();
+      BinaryTree current = this;
       
       return "";
   }
