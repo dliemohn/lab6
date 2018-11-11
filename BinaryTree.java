@@ -144,13 +144,13 @@ public class BinaryTree {
       if(!left.isEmpty())
     	  result += left.nodeSum();
       if(!right.isEmpty())
-      result += right.nodeSum();
+    	  result += right.nodeSum();
       return result;
   }
 
   public void doubles(){
       int newValue = Integer.parseInt(data) * 2;
-      if(!left.isEmpty())
+      if(!left.isEmpty()) 
     	  left.doubles();
       if(!right.isEmpty())
     	  right.doubles();
