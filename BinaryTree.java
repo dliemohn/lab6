@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinaryTree {
 
@@ -58,56 +59,51 @@ public class BinaryTree {
 
   public int nodeCount(){
       if(isEmpty())
-	  return 0;
+    	  return 0;
       else
-	  return 1 + left.nodeCount()+right.nodeCount();
+    	  return 1 + left.nodeCount()+right.nodeCount();
   }
 
   public int prune(){
-      int headCount = 0;
+	  if(isEmpty())
+		  return 0;
       if (this.isLeaf()) {
-	  headCount++;
 	  data = null;
+	  left = null;
+	  right = null;
+	  return 1;
       }
-      if (left != null)
-	  headCount+= left.prune();
-      if (right != null)
-	  headCount += right.prune();
-      return headCount;
+      return left.prune() + right.prune();
   }
 
   public boolean isFull(){
-      // TODO:  write the ifFull method
+      if(left.isEmpty() && right.isEmpty())
+    	  return true;
+      if(!left.isEmpty() && !right.isEmpty())
+    	  return left.isFull() && right.isFull();
       return false;
   }
+  
+  
 
   public boolean isComplete(){
-      // TODO:  write the isComplete method
+      if(!left.isEmpty() && !right.isEmpty())
+    	  	return left.isFull() && right.isFull();
       return false;
   }
 
   public int leafCount(){
-      int count = 0;
-      if (right != null)
-	  count += right.leafCount();
-      if (left!=null)
-	 count += left.leafCount();
-      if (this.isLeaf()) 
-	  count++; 
-      return count;
+	  if(isEmpty())
+		  return 0;
+	  if(isLeaf())
+		  return 1;
+	  return left.leafCount() + right.leafCount();
   }
 
   public BinaryTree mirrorImage(){
-      BinaryTree result = new BinaryTree(data);
-      if (right == null)
-	  result.left = null;
-      else 
-	  result.left = right.mirrorImage();
-      if (left == null)
-	  result.right = null;
-      else 
-	  result.right = left.mirrorImage();
-      return result;
+      if(isEmpty())
+    	  return new BinaryTree();
+      return new BinaryTree(data, right, left);
   }
 
   public int height(){
@@ -122,21 +118,30 @@ public class BinaryTree {
   }
 
   public int levelCount(int level){
-	  if(data == null)
+	  if(this.isEmpty())
 		  return 0;
       if (level == 0)
     	  return 1;
-      int levelBelow = 0;
-      if(!left.isEmpty())
-    	  levelBelow += left.levelCount(level--);
-      if(right.isEmpty())
-    	  levelBelow += right.levelCount(level--);
-      return levelBelow;
+      return left.levelCount(level-1) + right.levelCount(level - 1);
   }
 
   public int weightBalanceFactor(){
-      // TODO:  write the weightBalanceFactor method
-      return -1;
+	  int max = 0;
+	  int balance = balance();
+	  if (Math.abs(balance) > Math.abs(max))
+		  max = balance;
+	  return max;
+  }
+  
+  public int balance() {
+	  int result = 0;
+	  if(isEmpty())
+		  return 0;
+	  if(!right.isEmpty())
+		  result++;
+	  if(!left.isEmpty())
+		  result--;
+	  return result + left.balance() + right.balance();
   }
 
   public int nodeSum(){
@@ -190,14 +195,21 @@ public class BinaryTree {
   }
 
   public String levelOrder(){
-	  if (isEmpty())
-		  return "";
-      String result = "";
-      LinkedList <String> order = new LinkedList<String>();
-      ArrayList <BinaryTree> level = new ArrayList<BinaryTree>();
-      BinaryTree current = this;
-      
-      return "";
+	  Queue<BinaryTree> q = new LinkedList<BinaryTree>();
+	  String result = "";
+	  if(!isEmpty())
+		  q.add(this);
+	  
+	  while(!q.isEmpty()) {
+		  BinaryTree cur = q.remove();
+		  result += cur.data + " ";
+		  System.out.println(cur.data);
+		  if(!left.isEmpty())
+			  q.add(cur.left);
+		  if(!right.isEmpty())
+			  q.add(cur.right);
+	  }
+      return result;
   }
   
   public String toString( String indent ) {

@@ -46,7 +46,7 @@ public class TreeLoader {
 		
 		BinaryTree current = new BinaryTree(data);
 		if (side.equals("L"))
-		ref.get(daddy).setLeft(current);
+			ref.get(daddy).setLeft(current);
 		else
 			ref.get(daddy).setRight(current);
 		ref.add(current);
