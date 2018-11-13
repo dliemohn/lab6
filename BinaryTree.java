@@ -68,10 +68,10 @@ public class BinaryTree {
 	  if(isEmpty())
 		  return 0;
       if (this.isLeaf()) {
-	  data = null;
-	  left = null;
-	  right = null;
-	  return 1;
+    	  data = null;
+    	  left = null;
+    	  right = null;
+    	  return 1;
       }
       return left.prune() + right.prune();
   }
@@ -83,14 +83,19 @@ public class BinaryTree {
     	  return left.isFull() && right.isFull();
       return false;
   }
-  
-  
 
   public boolean isComplete(){
-      if(!left.isEmpty() && !right.isEmpty())
-    	  	return left.isFull() && right.isFull();
-      return false;
+      return isComplete(0, nodeCount());
   }
+  
+  boolean isComplete(int index, int nodeCount) 
+  { 
+      if (isEmpty())         
+         return true; 
+      if (index >= nodeCount) 
+         return false; 
+      return (left.isComplete( 2 * index + 1, nodeCount) && right.isComplete( 2 * index + 2, nodeCount));
+  } 
 
   public int leafCount(){
 	  if(isEmpty())
@@ -126,23 +131,21 @@ public class BinaryTree {
   }
 
   public int weightBalanceFactor(){
-	  int max = 0;
-	  int balance = balance();
-	  if (Math.abs(balance) > Math.abs(max))
-		  max = balance;
-	  return max;
+	  if (isEmpty())
+		  return 0;
+	  if (!isLeaf()) {
+	  int bal = left.height() - right.height();
+	  int lb = left.weightBalanceFactor();
+	  int rb = right.weightBalanceFactor();
+	  if (Math.abs(bal) < Math.abs(lb))
+		  bal = lb;
+	  if (Math.abs(bal) < Math.abs(rb))
+		  bal = rb;
+	  return bal;
+	  }
+	return 0;
   }
   
-  public int balance() {
-	  int result = 0;
-	  if(isEmpty())
-		  return 0;
-	  if(!right.isEmpty())
-		  result++;
-	  if(!left.isEmpty())
-		  result--;
-	  return result + left.balance() + right.balance();
-  }
 
   public int nodeSum(){
       int result = Integer.parseInt(data);
